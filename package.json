@@ -1,5 +1,5 @@
 {
-  "name": "Vispo",
+  "name": "vispo",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,8 @@
   "description": "",
   "dependencies": {
     "bufferutil": "^4.0.1",
-    "discord.js": "^12.2.0"
+    "discord.js": "^12.2.0",
+    "ytdl-core": "^3.2.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
