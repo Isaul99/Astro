@@ -1,30 +1,32 @@
-//Codigos de Inicio del Bot
+//////////Codigos de Inicio del Bot//////////
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const config = require("./config.json");
 
-//Mensaje de Arrqnue del Bot
-function presence(){
+/////////Mensaje de Arrqnue del Bot///////
+client.on('ready', () => {
+    console.log('Bot Arranco correctamente!');
     client.user.setPresence({
         status: "online",
         game: {
-            name: "=help para Ayuda",
-            type: "PLAYING"
-
+            name: "=Help / Para Ayuda",
+            type: "P    "
         }
-    });
-}
 
-    //Llamado del Prefix
+
+    })
+
+});
+
+    //////Llamado del Prefix///////
     var prefix = config.prefix;
 
- //Linea de arranque de comandos
+ //////////Linea de arranque de comandos/////////
  client.on('message', message => {
-    console.log(message.content);
-    presence();
+	console.log(message.content);
 
  
-    //Mensaje de arranque
+    /////////////Mensaje de arranque/////////////////
     if (!message.content.startsWith(config.prefix)) return;
     if (message.author.bot) return;
 
@@ -32,7 +34,7 @@ function presence(){
     const args = message.content.slice(prefix.length).trim().split(' ');
     const command = args.shift().toLowerCase();
 
-    //Mensaje EMBED de Ayuda
+    ///////////////Mensaje EMBED de Ayuda//////////////////
     if (message.content.startsWith(prefix + "help")){
         message.channel.send({embed:{
             color: 3447003,
@@ -82,13 +84,13 @@ function presence(){
     
     };
 
-    //comando de IP
+    ///////////////////comando de IP/////////////////////////
     if (message.content.startsWith(prefix + "IP")){
         message.channel.send({embed:{
             color: 3447003,
             autor:{
                 name: client.user.username,
-                icon_url: client.user.avatarURL
+                iconURL: client.user.avatarURL
 
             },
 
@@ -110,30 +112,13 @@ function presence(){
         }});
     }
 
-
-    //Comando Kick
-    if(command === 'kick' ){
-
-        let user = message.mentions.users.first();
-        let razon = args.slice(1).join(' ');
-        
-        if (message.mentions.users.size < 1) return message.reply('Debe mencionar a alguien.').catch(console.error);
-        if (!razon) return message.channel.send('Escriba una razón, `=kick @username [razón]`');
-        if (!message.guild.member(user).kickable) return message.reply('No puedo patear al usuario mencionado.');
-         
-        message.guild.member(user).kick(razon);
-        message.channel.send(`**${user.username}**, fue pateado del servidor, razón: ${razon}.`);
-    
-    }
-    
-
-    //Comando de Redes
+    ////////////////Comando de Redes///////////////////////
     if (message.content.startsWith(prefix + "Redes")){
         message.channel.send({embed: {
             color: 929208,
             author: {
                 name: client.user.username,
-                iconURL: client.user.avatarURL
+                icon_url: 'https://scontent.fsap3-1.fna.fbcdn.net/v/t1.0-9/117770812_627632674825881_1979038526526197717_n.jpg?_nc_cat=109&_nc_sid=09cbfe&_nc_ohc=iZ7pGNKro2IAX_-xuAa&_nc_oc=AQn0SKCx4cmq2nVGcB6Yz_E5WinZfs_MsyJWN7tfaiilBfa22tPpCjKobcCxpsLnp94&_nc_ht=scontent.fsap3-1.fna&oh=d0b15fb1a04d72bdbd6e6165e6e43c68&oe=5F6A6A78'
 
             },
             title: "Aqui tienes nuestras Redes",
