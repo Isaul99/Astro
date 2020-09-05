@@ -86,5 +86,84 @@ client.on('ready', () => {
 
     }
 
+    
+    if(message.content.startsWith(prefix + "Ayudante")){
+        const embed = new Discord.MessageEmbed()
+        .setTitle("Comandos de Ayuda de Helper 🤓")
+        .setDescription("Estos son los comandos con los que cuenta un Helper dentro de la Network :ghost:. Si no entiendes correctamente un comando comunicate con un superior.")
+        .setColor("RED")
+        .addField("/fly", "Comando sencillo que te permite volar en los mundos(Solo en Server Survival y Vanilla) 🤗", true)
+        .addField("/warn", "Este comando permite a los helpers Advertir a un usuario cuando comete demasiadas faltas 🚨 (Estos Warns son Acumulables y al llegar a 4 el usuario obtiene un baneo de 7 dias)")
+        .addField("/kick", "Comando creado para expulsar usuarios del servidor(Esto solo expuls al jugador pero puede unirse nuevamente)")
+        .addField("/socialspy", "Con el fin de saber que planea la gente en secreto este comando les permitira ver los mensajes enviados con /m (Por Favor no Divulgar los secretops de los demas)")
+        .addField("/sc", "Con este comando el staff en general puede comunicarse por chats privados entre servidores")
+        .addField("/heal", "Simple pero rapido, Este comando regenera toda la salud y el Hambre :D (Regalo de parte de Isaul)")
+        .addField("/invsee", "Sirve para checar los inventarios de un usuario pero esto solo permite ver que trae (No dejara poner o Sacar cosas de su Inventario)")
+        .setAuthor(message.member.displayName, message.author.displayAvatarURL())
+        .setFooter("Consulta hecha por: " + message.member.displayName, message.author.displayAvatarURL())
+        .setTimestamp();
+        message.channel.send(embed)
+    }
+
+     /* 
+    Desde aqui en adelante comienzan los comandos de Moderación y gestion del servidor los 
+    codigos de comandos anteriores seran de gestion para el usuario
+    */
+
+    ////////////Comando Kick///////////
+    if(message.content.startsWith(prefix + "Kick")){
+        if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("Parece que no tienes permisos para Kickear Usuarios");
+        let toKick = message.mentions.members.first();
+        let reason = args.slice(1).join(" ");
+        if (!args[0]) return message.channel.send(":x: Debes mencionar a el usuario que quieres Expulsar");
+        if(!toKick) return message.channel.send(`${args[0]} No es un Usuario.`);
+        if(!reason) return message.channel.send("Debes especificar una Razon");
+
+        if(!toKick.kickable){
+            return message.channel.send(":x: No puedes Kickear Este Usuario :x:");
+        }
+
+        if(toKick.kickable){
+            const embed = new Discord.MessageEmbed()
+            .setTitle("Kickeo Exitoso")
+            .setAuthor(message.member.displayName, message.author.displayAvatarURL())
+            .addField("Usuario Expulsado: ", toKick)
+            .addField("Razón: ", reason)
+            .addField("Autor: ", message.author)
+            .setColor("RANDOM");
+            message.channel.send(embed)
+            toKick.kick();
+        }
+
+    }
+
+
+    ///////////Comando Ban////////////
+    if(message.content.startsWith(prefix + "Ban")){
+        if(!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send("Parece que no tienes permisos para Bannear Usuarios");
+        let toBan = message.mentions.members.first();
+        let reason = args.slice(1).join(" ");
+        if (!args[0]) return message.channel.send(":x: Debes mencionar a el usuario que quieres Bannear");
+        if(!toBan) return message.channel.send(`${args[0]} No es un Usuario.`);
+        if(!reason) return message.channel.send("Debes especificar una Razon");
+
+        if(!toBan.bannable){
+            return message.channel.send(":x: No puedes Banear Este Usuario :x:");
+        }
+
+        if(toBan.bannable){
+            const embed = new Discord.MessageEmbed()
+            .setTitle("Banneo Exitoso")
+            .setAuthor(message.member.displayName, message.author.displayAvatarURL())
+            .addField("Usuario Baneado: ", toBan)
+            .addField("Razón: ", reason)
+            .addField("Autor: ", message.author)
+            .setColor("RANDOM");
+            message.channel.send(embed)
+            toBan.ban();
+        }
+
+    }
+        
  });
   client.login(config.token);
